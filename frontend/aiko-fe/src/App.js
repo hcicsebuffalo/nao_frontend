@@ -7,16 +7,19 @@ import { BrowserRouter as Router,
 import { Routing } from './routes/routes';
 import history from './services/history'
 // import { login } from './components/login';
-import { createTheme, ThemeProvider } from '@mui/material/styles';
-
+import { createTheme, ThemeProvider, styled } from '@mui/material/styles';
+import { orange } from '@mui/material/colors';  
 // const theme = createMuiTheme({
 //   
 // });
 
 const theme = createTheme({
   palette: {
-    background: {
-      default: '#CD5C5C', // replace with desired color
+    primary: {
+      main: '#2196f3', // Replace with your custom primary color
+    },
+    secondary: {
+      main: '#f50057', // Replace with your custom secondary color
     },
   },
 });

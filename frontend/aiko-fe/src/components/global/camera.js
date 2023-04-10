@@ -9,24 +9,82 @@ import axios from 'axios'
 import logo from '../../logo.svg';
 import '../../App.css';
 import img from '../../media/aiko.png'
-import { Avatar, Box, Paper, TextField, Typography } from '@mui/material';
+import { AppBar, Avatar, Box, Paper, Tab, Tabs, TextField, Toolbar, Typography } from '@mui/material';
+
+
+import PropTypes from 'prop-types';
+
+function TabPanel(props) {
+  const { children, value, index, ...other } = props;
+
+  return (
+    <div
+      role="tabpanel"
+      hidden={value !== index}
+      id={`simple-tabpanel-${index}`}
+      aria-labelledby={`simple-tab-${index}`}
+      {...other}
+    >
+      {value === index && (
+        <Box sx={{ p: 3 }}>
+          <Typography>{children}</Typography>
+        </Box>
+      )}
+    </div>
+  );
+}
+
+TabPanel.propTypes = {
+  children: PropTypes.node,
+  index: PropTypes.number.isRequired,
+  value: PropTypes.number.isRequired,
+};
+
+function a11yProps(index) {
+  return {
+    id: `simple-tab-${index}`,
+    'aria-controls': `simple-tabpanel-${index}`,
+  };
+}
 
 const Camera = () => {
   const [message, setMessage] = React.useState('');
+  const [value, setValue] = React.useState(0);
 
   function handleClickButton(action) {
-    console.log(action)
+    const requestOptions = {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: action
+    };
+    console.log(requestOptions)
+    const req = axios.post('http://127.0.0.1:8000/api/action', requestOptions)
+    .then((resp) => {
+      console.log(resp)
+    }).catch((err) => {
+      console.log(err)
+    })
   }
 
+  const handleChange = (event, newValue) => {
+    setValue(newValue);
+  };
+
   return (
-    <div style={{ padding: '1%', backgroundColor: "#85C1E9" }}>
-      <Box sx={{ flexGrow: 1 }}>
+    // , backgroundColor: "#85C1E9"
+    <div style={{ padding: '1%' }}>
+      <AppBar style={{ backgroundColor: '#bd6b2d'}}>
+        <Toolbar>
+          <h1>NAO Dashboard</h1>
+        </Toolbar>
+      </AppBar>
+      <Box sx={{ flexGrow: 1 }} mt={10}>
         <Grid container spacing={2}>
-          <Grid xs={6} >
+          <Grid xs={8} >
             <div>
-              <h1 style={{ color: "white" }} >Video Feed</h1>
-              <Card style={{ borderRadius: '20px', backgroundColor: 'white', boxShadow: '0px 4px 4px rgba(0, 0, 0, 0)', maxWidth: '100%' }}>
-                <Paper sx={{ p: 2, minHeight: '350px' }}>
+              <h1 >Video Feed</h1>
+              <Card style={{ borderRadius: '20px', color: 'black', boxShadow: '0px 4px 4px rgba(0, 0, 0, 0)', maxWidth: '100%', backgroundColor: 'lightgray' }}>
+                <Paper sx={{ p: 2, minHeight: '60vh' }}>
                   <center>
                     <img
                       src="http://127.0.0.1:8000/api/getfeed"
@@ -43,9 +101,9 @@ const Camera = () => {
               /> */}
             </div>
           </Grid>
-          <Grid xs={6}>
+          {/* <Grid xs={6}>
             <div>
-              <h1 style={{ color: "white" }}>Chat</h1>
+              <h1>Chat</h1>
               <Card style={{ borderRadius: '20px', backgroundColor: 'white', boxShadow: '0px 4px 4px rgba(0, 0, 0, 0)', maxWidth: '90%', padding: '5%' }}>
                 <Paper sx={{ p: 2, minHeight: '260px' }}>
                   <Box sx={{ display: 'flex', alignItems: 'center', mb: 2 }}>
@@ -65,13 +123,40 @@ const Camera = () => {
                 </Paper>             
               </Card>
             </div>
-          </Grid>
-          <Grid xs={6}>
+          </Grid> */}
+          <Grid xs={4}>
             <div>
-              <h1 style={{ color: "white" }}>Choose Actions</h1>
-              <Card style={{ borderRadius: '20px', backgroundColor: 'white', boxShadow: '0px 4px 4px rgba(0, 0, 0, 0)', maxWidth: '90%', padding: '5%' }}>
+              <h1>Choose Actions</h1>
+              <Box sx={{ width: '70%' }}>
+                <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
+                  <Tabs value={value} onChange={handleChange} aria-label="basic tabs example">
+                    <Tab label="Move" {...a11yProps(0)} />
+                    <Tab label="Voice" {...a11yProps(1)} />
+                  </Tabs>
+                </Box>
+                <TabPanel value={value} index={0}>
+                  <Card style={{ borderRadius: '20px', backgroundColor: 'white', boxShadow: '0px 4px 4px rgba(0, 0, 0, 0)', maxWidth: '90%', padding: '5%' }}>
+                    <CardActions sx={{}}>
+                      <Button variant='outlined' style={{ minWidth: '20%', color: '#bd6b2d' }} onClick={(e) => {handleClickButton('dance')}}>Dance</Button>
+                      <Button variant='outlined' style={{ minWidth: '20%' }} onClick={(e) => {handleClickButton('wave')}}>Wave</Button>
+                      <Button variant='outlined' style={{ minWidth: '20%' }} onClick={(e) => {handleClickButton('sit')}}>Sit</Button>
+                      <Button variant='outlined' style={{ minWidth: '20%' }} onClick={(e) => {handleClickButton('stand')}}>Stand</Button>
+                    </CardActions>
+                  </Card>
+                </TabPanel>
+                <TabPanel value={value} index={1}>
+                <Card style={{ borderRadius: '20px', backgroundColor: 'white', boxShadow: '0px 4px 4px rgba(0, 0, 0, 0)', maxWidth: '90%', padding: '5%' }}>
+                    <CardActions sx={{}}>
+                    <Button variant='outlined' style={{ minWidth: '20%' }} onClick={(e) => {handleClickButton('sing')}}>Sing</Button>
+                  <Button variant='outlined' style={{ minWidth: '20%' }} onClick={(e) => {handleClickButton('talk')}}>Talk</Button>
+                    </CardActions>
+                  </Card>
+                </TabPanel>
+                
+              </Box>
+              {/* <Card style={{ borderRadius: '20px', backgroundColor: 'white', boxShadow: '0px 4px 4px rgba(0, 0, 0, 0)', maxWidth: '90%', padding: '5%' }}>
                 <CardActions sx={{}}>
-                  <Button variant='outlined' style={{ minWidth: '50%' }} onClick={(e) => {handleClickButton('dance')}}>Dance</Button>
+                  <Button variant='outlined' style={{ minWidth: '20%' }} onClick={(e) => {handleClickButton('dance')}}>Dance</Button>
                   <Button variant='outlined' style={{ minWidth: '50%' }} onClick={(e) => {handleClickButton('wave')}}>Wave</Button>
                 </CardActions>
                 <CardActions sx={{}}>
@@ -82,12 +167,12 @@ const Camera = () => {
                   <Button variant='outlined' style={{ minWidth: '50%' }} onClick={(e) => {handleClickButton('sing')}}>Sing</Button>
                   <Button variant='outlined' style={{ minWidth: '50%' }} onClick={(e) => {handleClickButton('talk')}}>Talk</Button>
                 </CardActions>
-              </Card>
+              </Card> */}
             </div>
           </Grid>
-          <Grid xs={6}>
+          {/* <Grid xs={6}>
             <div>
-              <h1 style={{ color: "white" }}>Logs</h1>
+              <h1>Logs</h1>
               <Card style={{ borderRadius: '20px', backgroundColor: 'white', boxShadow: '0px 4px 4px rgba(0, 0, 0, 0)', maxWidth: '90%', padding: '5%' }}>
                 <Paper sx={{ p: 2, minHeight: '265px', backgroundColor: 'black' }}>
                   <Box sx={{ display: 'flex', alignItems: 'center', mb: 2, color: 'white' }}>
@@ -96,7 +181,7 @@ const Camera = () => {
                 </Paper>             
               </Card>
             </div>
-          </Grid>
+          </Grid> */}
         </Grid>
       </Box>
       
