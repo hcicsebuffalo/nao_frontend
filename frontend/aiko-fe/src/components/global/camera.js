@@ -10,7 +10,7 @@ import logo from '../../logo.svg';
 import '../../App.css';
 import img from '../../media/aiko.png'
 import { AppBar, Avatar, Box, Paper, Tab, Tabs, TextField, Toolbar, Typography } from '@mui/material';
-
+import './camera.css'
 
 import PropTypes from 'prop-types';
 
@@ -75,16 +75,16 @@ const Camera = () => {
     <div style={{ padding: '1%' }}>
       <AppBar style={{ backgroundColor: '#bd6b2d'}}>
         <Toolbar>
-          <h1>NAO Dashboard</h1>
+          <h1 style={{ color: 'white' }}>NAO Dashboard</h1>
         </Toolbar>
       </AppBar>
-      <Box sx={{ flexGrow: 1 }} mt={10}>
+      <Box sx={{ flexGrow: 1 }} mt={14}>
         <Grid container spacing={2}>
-          <Grid xs={8} >
+          <Grid xs={9}>
             <div>
-              <h1 >Video Feed</h1>
-              <Card style={{ borderRadius: '20px', color: 'black', boxShadow: '0px 4px 4px rgba(0, 0, 0, 0)', maxWidth: '100%', backgroundColor: 'lightgray' }}>
-                <Paper sx={{ p: 2, minHeight: '60vh' }}>
+              <Card style={{ borderRadius: '20px', color: 'white', boxShadow: '0px 4px 4px rgba(0, 0, 0, 0)', maxWidth: '100%', backgroundColor: 'lightgray' }}>
+                <h1 color='white' style={{ marginLeft:'2%'}}>Video Feed</h1>
+                <Paper sx={{ p: 2, minHeight: '70vh', backgroundColor: 'lightgray' }}>
                   <center>
                     <img
                       src="http://127.0.0.1:8000/api/getfeed"
@@ -124,10 +124,10 @@ const Camera = () => {
               </Card>
             </div>
           </Grid> */}
-          <Grid xs={4}>
+          <Grid xs={3}>
             <div>
-              <h1>Choose Actions</h1>
-              <Box sx={{ width: '70%' }}>
+              <h1 style={{ color : '#919294'}}>Choose Actions</h1>
+              <Box sx={{ width: '100%' }}>
                 <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
                   <Tabs value={value} onChange={handleChange} aria-label="basic tabs example">
                     <Tab label="Move" {...a11yProps(0)} />
@@ -137,10 +137,8 @@ const Camera = () => {
                 <TabPanel value={value} index={0}>
                   <Card style={{ borderRadius: '20px', backgroundColor: 'white', boxShadow: '0px 4px 4px rgba(0, 0, 0, 0)', maxWidth: '90%', padding: '5%' }}>
                     <CardActions sx={{}}>
-                      <Button variant='outlined' style={{ minWidth: '20%', color: '#bd6b2d' }} onClick={(e) => {handleClickButton('dance')}}>Dance</Button>
-                      <Button variant='outlined' style={{ minWidth: '20%' }} onClick={(e) => {handleClickButton('wave')}}>Wave</Button>
-                      <Button variant='outlined' style={{ minWidth: '20%' }} onClick={(e) => {handleClickButton('sit')}}>Sit</Button>
-                      <Button variant='outlined' style={{ minWidth: '20%' }} onClick={(e) => {handleClickButton('stand')}}>Stand</Button>
+                      <Button variant='outlined' color='primary' style={{ minWidth: '20%' }} onClick={(e) => {handleClickButton('dance')}}>Dance</Button>
+                      <Button variant='outlined' style={{ minWidth: '20%' }} onClick={(e) => {handleClickButton('takepicture')}}>Take Picture</Button>
                     </CardActions>
                   </Card>
                 </TabPanel>
@@ -148,7 +146,7 @@ const Camera = () => {
                 <Card style={{ borderRadius: '20px', backgroundColor: 'white', boxShadow: '0px 4px 4px rgba(0, 0, 0, 0)', maxWidth: '90%', padding: '5%' }}>
                     <CardActions sx={{}}>
                     <Button variant='outlined' style={{ minWidth: '20%' }} onClick={(e) => {handleClickButton('sing')}}>Sing</Button>
-                  <Button variant='outlined' style={{ minWidth: '20%' }} onClick={(e) => {handleClickButton('talk')}}>Talk</Button>
+                  <Button variant='outlined' style={{ minWidth: '20%' }} onClick={(e) => {handleClickButton('laugh')}}>Laugh</Button>
                     </CardActions>
                   </Card>
                 </TabPanel>

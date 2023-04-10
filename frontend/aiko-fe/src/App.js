@@ -16,10 +16,10 @@ import { orange } from '@mui/material/colors';
 const theme = createTheme({
   palette: {
     primary: {
-      main: '#2196f3', // Replace with your custom primary color
+      main: '#bd6b2d', // Replace with your custom primary color
     },
     secondary: {
-      main: '#f50057', // Replace with your custom secondary color
+      main: '#2d9ebd', // Replace with your custom secondary color
     },
   },
 });
